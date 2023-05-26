@@ -1,4 +1,5 @@
 ﻿using GhostKeyBoard.mvvm.Commands;
+using GhostKeyBoard.Record;
 using System;
 using System.Diagnostics;
 using System.Windows.Input;
@@ -7,6 +8,24 @@ namespace GhostKeyBoard.mvvm.ViewModel
 {
     public class RecordViewModel : ViewModelBase
     {
+        public RecordViewModel()
+        {
+            Debug.WriteLine("INIT TIMER");
+            TimerService.Instance.OnTimerTickEvent += Event;
+        }
+
+        ~RecordViewModel()
+        {
+            TimerService.Instance.OnTimerTickEvent -= Event;
+        }
+
+        private void Event<TimeSpan>(object o, TimeSpan time)
+        {
+            if (time != null)
+            {
+                RecordTime = $"{time}".Substring(0,10);
+            }
+        }
 
         public bool RecordAvialable
         {
@@ -24,7 +43,7 @@ namespace GhostKeyBoard.mvvm.ViewModel
         {
             try
             {
-                throw new NotImplementedException();
+                TimerService.Instance.Start();
             }
             catch (Exception ex)
             {
@@ -36,7 +55,7 @@ namespace GhostKeyBoard.mvvm.ViewModel
         {
             try
             {
-                throw new NotImplementedException();
+                TimerService.Instance.Stop();
             }
             catch (Exception ex)
             {
