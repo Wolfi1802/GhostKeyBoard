@@ -23,7 +23,7 @@ namespace GhostKeyBoard.mvvm.ViewModel
         {
             if (time != null)
             {
-                RecordTime = $"{time}".Substring(0,10);
+                this.RecordTime = $"{time}".Substring(0, 8);//8 is seconds, 10 is miliseconds
             }
         }
 
@@ -44,6 +44,7 @@ namespace GhostKeyBoard.mvvm.ViewModel
             try
             {
                 TimerService.Instance.Start();
+                EventService.Instance.StartRecordThread();
             }
             catch (Exception ex)
             {
@@ -56,6 +57,7 @@ namespace GhostKeyBoard.mvvm.ViewModel
             try
             {
                 TimerService.Instance.Stop();
+                EventService.Instance.StopRecordThread();
             }
             catch (Exception ex)
             {
