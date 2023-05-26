@@ -14,7 +14,13 @@ namespace GhostKeyBoard.mvvm.ViewModel
             get => GetProperty<bool>(nameof(RecordAvialable));
         }
 
-        public ICommand RecordCommand => new RelayCommand(param =>
+        public string RecordTime
+        {
+            set => SetProperty(nameof(RecordTime), value);
+            get => GetProperty<string>(nameof(RecordTime));
+        }
+
+        public ICommand StartRecordCommand => new RelayCommand(param =>
         {
             try
             {
@@ -22,7 +28,19 @@ namespace GhostKeyBoard.mvvm.ViewModel
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"{nameof(HomeViewModel)},{nameof(RecordCommand)},\nEX :[{ex}]");
+                Debug.WriteLine($"{nameof(RecordViewModel)},{nameof(StartRecordCommand)},\nEX :[{ex}]");
+            }
+        });
+
+        public ICommand StopRecordCommand => new RelayCommand(param =>
+        {
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"{nameof(RecordViewModel)},{nameof(StopRecordCommand)},\nEX :[{ex}]");
             }
         });
     }

@@ -29,7 +29,7 @@ namespace GhostKeyBoard
 
         public MainWindowViewModel()
         {
-            this.CurrentPage = this.RecordViewModel;
+            this.CurrentPage = this.HomeViewModel;
 
             ClosePageEvent += (o, e) =>
             {
