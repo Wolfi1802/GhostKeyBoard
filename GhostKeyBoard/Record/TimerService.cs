@@ -5,6 +5,7 @@ namespace GhostKeyBoard.Record
 {
     internal class TimerService
     {
+        private const int TIMER_INTERVALL = 40;
         private static TimerService _instance;
 
         public static TimerService Instance
@@ -24,8 +25,8 @@ namespace GhostKeyBoard.Record
 
         public TimerService()
         {
-            Timer.Elapsed += OnTimerElapsed; ;
-            Timer.Interval = 200;//todo [TS] maybe 1k ms better to prevent ressource killer
+            this.Timer.Elapsed += OnTimerElapsed;
+            this.Timer.Interval = TIMER_INTERVALL;
         }
 
         private DateTime? startTime;
@@ -34,20 +35,25 @@ namespace GhostKeyBoard.Record
             if (sender is Timer timer)
             {
                 var temp = (e.SignalTime - startTime).Value;
-                OnTimerTickEvent?.Invoke(sender, temp);
+                this.OnTimerTickEvent?.Invoke(sender, temp);
             }
         }
 
         public void Start()
         {
-            Timer.Start();
-            startTime = DateTime.Now;
+            this.Timer.Start();
+            this.startTime = DateTime.Now;
         }
 
         public void Stop()
         {
-            Timer.Stop();
-            startTime = null;
+            this.Timer.Stop();
+            this.startTime = null;
+        }
+
+        public TimeSpan GetTime()
+        {
+            return (DateTime.Now - startTime).Value;
         }
     }
 }
