@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GhostKeyBoard.mvvm.ViewModel"
         xmlns:view="clr-namespace:GhostKeyBoard.Pages"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="{Binding VersionTitle}" Height="150" Width="300">
     <Window.Resources>
         <DataTemplate DataType="{x:Type local:HomeViewModel}">
             <view:HomePage />

@@ -1,6 +1,7 @@
 ﻿using GhostKeyBoard.mvvm;
 using GhostKeyBoard.mvvm.Commands;
 using GhostKeyBoard.mvvm.ViewModel;
+using GhostKeyBoard.PVersion;
 using System;
 using System.Diagnostics;
 using System.Windows.Input;
@@ -9,6 +10,7 @@ namespace GhostKeyBoard
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        public string VersionTitle { get { return $"GhostKeyBoard {new ProjectVersion().GetVersion()}"; } }
 
         public ViewModelBase CurrentPage
         {
