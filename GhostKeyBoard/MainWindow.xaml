@@ -28,14 +28,17 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Content="{Binding GlobalUserMessage}" HorizontalAlignment="Center"/>
+        <Label Grid.Row="0" Grid.Column="0" Content="{Binding GlobalUserMessage}" Background="LightBlue" Foreground="Red"/>
 
         <DockPanel  Grid.Row="1" Grid.Column="0">
             <Border BorderBrush="Transparent" BorderThickness="1">
-                <StackPanel Background="LightBlue">
-                    <Button Content="Home" Command="{Binding ShowHomeCommand}" Margin="5"/>
-                    <Button Content="Record Standorte" Command="{Binding ShowRecordCommand}" Margin="5"/>
-                </StackPanel>
+                <Expander ExpandDirection="Left">
+
+                    <StackPanel Background="LightBlue">
+                        <Button Content="Home" Command="{Binding ShowHomeCommand}" Margin="5"/>
+                        <Button Content="Record Standorte" Command="{Binding ShowRecordCommand}" Margin="5"/>
+                    </StackPanel>
+                </Expander>
             </Border>
 
             <Frame Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden"/>
