@@ -11,13 +11,19 @@ namespace GhostKeyBoard.mvvm.ViewModel
 {
     public class HomeViewModel : ViewModelBase
     {
-        public bool RecordAvialable
+
+        public HomeViewModel()
         {
-            set => SetProperty(nameof(RecordAvialable), value);
-            get => GetProperty<bool>(nameof(RecordAvialable));
+            this.HomeText = "Welcome User";
         }
 
-        public ICommand RecordCommand => new RelayCommand(param =>
+        public string HomeText
+        {
+            set => SetProperty(nameof(HomeText), value);
+            get => GetProperty<string>(nameof(HomeText));
+        }
+
+        public ICommand OpenSaveFolder => new RelayCommand(param =>
         {
             try
             {
@@ -25,7 +31,7 @@ namespace GhostKeyBoard.mvvm.ViewModel
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"{nameof(HomeViewModel)},{nameof(RecordCommand)},\nEX :[{ex}]");
+                Debug.WriteLine($"{nameof(HomeViewModel)},{nameof(OpenSaveFolder)},\nEX :[{ex}]");
             }
         });
     }

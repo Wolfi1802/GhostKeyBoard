@@ -3,12 +3,33 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:GhostKeyBoard.Pages"
+      xmlns:local="clr-namespace:GhostKeyBoard.mvvm.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="RecordPage">
+    <Page.Resources>
+        <ResourceDictionary>
+            <local:RecordViewModel x:Key="ViewModel"/>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Page.DataContext>
+        <Binding Source="{StaticResource ViewModel}" x:Name="vm"/>
+    </Page.DataContext>
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Button Grid.Row="0" Grid.Column="0" Command="{Binding StartRecordCommand}" Content="Start" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="50" Margin="5"/>
+        <Button Grid.Row="0" Grid.Column="1" Command="{Binding StopRecordCommand}" Content="Stop" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="50"  Margin="5"/>
+        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding RecordTime ,FallbackValue=00:00:00}" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="5"/>
     </Grid>
 </Page>
