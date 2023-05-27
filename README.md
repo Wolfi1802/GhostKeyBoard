@@ -1,10 +1,10 @@
-# GhostKeyBoard
+# GhostKeyBoard Roadmap
 Planed
-- Functions
 - Save Load
+- Repeat
 - More Features
 
 Done
 - Basic Layout
 - Mouse && Keyboard Hooks saved on List
-- Timestemp
+- Mouse && Keyboard Hooks can be executed
