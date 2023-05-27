@@ -16,6 +16,7 @@ namespace GhostKeyBoard.mvvm.ViewModel
 
         ~RecordViewModel()
         {
+            Debug.WriteLine("DESPO TIMER");
             TimerService.Instance.OnTimerTickEvent -= Event;
         }
 
@@ -44,7 +45,7 @@ namespace GhostKeyBoard.mvvm.ViewModel
             try
             {
                 TimerService.Instance.Start();
-                EventService.Instance.StartRecordThread();
+                HookService.Instance.StartRecord();
             }
             catch (Exception ex)
             {
@@ -57,11 +58,39 @@ namespace GhostKeyBoard.mvvm.ViewModel
             try
             {
                 TimerService.Instance.Stop();
-                EventService.Instance.StopRecordThread();
+                HookService.Instance.StopRecord();
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"{nameof(RecordViewModel)},{nameof(StopRecordCommand)},\nEX :[{ex}]");
+            }
+        });
+
+
+        public ICommand StartPlayCommand => new RelayCommand(param =>
+        {
+            try
+            {
+                TimerService.Instance.Stop();
+                HookService.Instance.StartPlay();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"{nameof(RecordViewModel)},{nameof(StartPlayCommand)},\nEX :[{ex}]");
+            }
+        });
+
+
+        public ICommand StopPlayCommand => new RelayCommand(param =>
+        {
+            try
+            {
+                TimerService.Instance.Stop();
+                HookService.Instance.StopPlay();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"{nameof(RecordViewModel)},{nameof(StopPlayCommand)},\nEX :[{ex}]");
             }
         });
     }
