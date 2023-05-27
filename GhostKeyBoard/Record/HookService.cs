@@ -29,6 +29,11 @@ namespace GhostKeyBoard.Record
         private HookService()
         {
         }
+        private Dictionary<List<HookBase>, string> SavedMakroList = new Dictionary<List<HookBase>, string>();
+        public void Save(string name)
+        {
+            SavedMakroList.Add(new List<HookBase>(HookList), name);
+        }
 
         public void StartRecord()
         {
