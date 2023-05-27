@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GhostKeyBoard.PVersion
 {
-    internal class ProjectVersion
+    public class ProjectVersion
     {
         private readonly Version _version;
         public ProjectVersion() 

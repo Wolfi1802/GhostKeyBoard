@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace GhostKeyBoard.Record
 {
-    internal class HookService
+    public class HookService
     {
         public static HookService Instance
         {
@@ -29,10 +29,11 @@ namespace GhostKeyBoard.Record
         private HookService()
         {
         }
-        private Dictionary<List<HookBase>, string> SavedMakroList = new Dictionary<List<HookBase>, string>();
+        public Dictionary<List<HookBase>, string> SavedMakroList = new Dictionary<List<HookBase>, string>();
         public void Save(string name)
         {
             SavedMakroList.Add(new List<HookBase>(HookList), name);
+            MainWindowViewModel.SendUserMessageEvent?.Invoke(null, $"{name} wurde erfolgreich gespeichert");
         }
 
         public void StartRecord()
