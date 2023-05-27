@@ -106,7 +106,7 @@ namespace GhostKeyBoard.mvvm.ViewModel
         {
             try
             {
-                HookService.Instance.Save();
+                HookService.Instance.Save(this.RecordName);
             }
             catch (Exception ex)
             {
