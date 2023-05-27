@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GhostKeyBoard.Enum
 {
-    enum Hook
+    public enum Hook
     {
         KeyBoard,
         Mouse

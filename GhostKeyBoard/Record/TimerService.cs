@@ -3,7 +3,7 @@ using System.Timers;
 
 namespace GhostKeyBoard.Record
 {
-    internal class TimerService
+    public class TimerService
     {
         private const int TIMER_INTERVALL = 40;
         private static TimerService _instance;

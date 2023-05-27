@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace GhostKeyBoard.DLLEvents
 {
-    internal class MouseEvents
+    public class MouseEvents
     {
         [DllImport("user32.dll")]
         private static extern bool GetCursorPos(out System.Drawing.Point lpPoint);

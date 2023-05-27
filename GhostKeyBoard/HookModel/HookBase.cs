@@ -3,9 +3,9 @@ using System;
 
 namespace GhostKeyBoard.HookModel
 {
-    abstract class HookBase
+    public class HookBase
     {
-        internal Hook KindOfHook { get; set; }
-        internal TimeSpan Time { get; set; }
+        public Hook KindOfHook { get; set; }
+        public TimeSpan Time { get; set; }
     }
 }

@@ -34,6 +34,12 @@ namespace GhostKeyBoard.mvvm.ViewModel
             get => GetProperty<bool>(nameof(RecordAvialable));
         }
 
+        public string RecordName
+        {
+            set => SetProperty(nameof(RecordName), value);
+            get => GetProperty<string>(nameof(RecordName));
+        }
+
         public string RecordTime
         {
             set => SetProperty(nameof(RecordTime), value);
@@ -46,6 +52,7 @@ namespace GhostKeyBoard.mvvm.ViewModel
             {
                 TimerService.Instance.Start();
                 HookService.Instance.StartRecord();
+                RecordAvialable = false;
             }
             catch (Exception ex)
             {
@@ -59,6 +66,7 @@ namespace GhostKeyBoard.mvvm.ViewModel
             {
                 TimerService.Instance.Stop();
                 HookService.Instance.StopRecord();
+                RecordAvialable = true;
             }
             catch (Exception ex)
             {
@@ -91,6 +99,18 @@ namespace GhostKeyBoard.mvvm.ViewModel
             catch (Exception ex)
             {
                 Debug.WriteLine($"{nameof(RecordViewModel)},{nameof(StopPlayCommand)},\nEX :[{ex}]");
+            }
+        });
+
+        public ICommand SaveRecordCommand => new RelayCommand(param =>
+        {
+            try
+            {
+                HookService.Instance.Save(this.RecordName);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"{nameof(RecordViewModel)},{nameof(SaveRecordCommand)},\nEX :[{ex}]");
             }
         });
     }
