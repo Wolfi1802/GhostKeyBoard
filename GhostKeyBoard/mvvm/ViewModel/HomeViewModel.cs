@@ -1,9 +1,8 @@
-﻿using GhostKeyBoard.mvvm.Commands;
+﻿using GhostKeyBoard.Helper;
+using GhostKeyBoard.HookModel;
 using GhostKeyBoard.Record;
-using System;
+using GhostKeyBoard.SaveData;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows.Input;
 
 namespace GhostKeyBoard.mvvm.ViewModel
 {
@@ -16,14 +15,14 @@ namespace GhostKeyBoard.mvvm.ViewModel
 
             foreach (var item in HookService.Instance.SavedMakroList)
             {
-                RecordModel model = new RecordModel();
-                model.Time = item.Key[item.Key.Count - 1].Time;
-                model.Name = item.Value;
-                model.ListOfActions = item.Key;
-
-               this.ItemsSource.Add(model);
+                this.ItemsSource.Add(ModelConverter.CreateRecordModel(item));
             }
+
+            if (this.ItemsSource.Count == 0)
+                MakroFileService.Load();
         }
+
+
 
         public string HomeText
         {
@@ -42,30 +41,5 @@ namespace GhostKeyBoard.mvvm.ViewModel
             set => SetProperty(nameof(SelectedRecord), value);
             get => GetProperty<RecordModel>(nameof(SelectedRecord));
         }
-
-        public ICommand StartPlayCommand => new RelayCommand(param =>
-        {
-            try
-            {
-                HookService.Instance.StartPlay(SelectedRecord.ListOfActions);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"{nameof(RecordViewModel)},{nameof(StartPlayCommand)},\nEX :[{ex}]");
-            }
-        });
-
-
-        public ICommand StopPlayCommand => new RelayCommand(param =>
-        {
-            try
-            {
-                HookService.Instance.StopPlay();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"{nameof(RecordViewModel)},{nameof(StopPlayCommand)},\nEX :[{ex}]");
-            }
-        });
     }
 }

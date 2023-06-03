@@ -1,10 +1,13 @@
 ﻿using GhostKeyBoard.DLLEvents;
 using GhostKeyBoard.Enum;
+using GhostKeyBoard.Helper;
 using GhostKeyBoard.HookModel;
+using GhostKeyBoard.SaveData;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace GhostKeyBoard.Record
 {
@@ -34,7 +37,11 @@ namespace GhostKeyBoard.Record
 
         public void Save(string name)
         {
-            SavedMakroList.Add(new List<HookBase>(HookList), name);
+            var temp = new List<HookBase>(HookList);
+            var tempPair = new KeyValuePair<List<HookBase>, string>(temp, name);
+
+            this.SavedMakroList.Add(temp, name);
+            MakroFileService.Save(this.SavedMakroList);
             MainWindowViewModel.SendUserMessageEvent?.Invoke(null, $"{name} wurde erfolgreich gespeichert");
         }
 
