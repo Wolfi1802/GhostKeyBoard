@@ -1,6 +1,7 @@
 ﻿using GhostKeyBoard.DLLEvents;
 using GhostKeyBoard.Enum;
 using GhostKeyBoard.HookModel;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -30,6 +31,7 @@ namespace GhostKeyBoard.Record
         {
         }
         public Dictionary<List<HookBase>, string> SavedMakroList = new Dictionary<List<HookBase>, string>();
+
         public void Save(string name)
         {
             SavedMakroList.Add(new List<HookBase>(HookList), name);
@@ -50,8 +52,9 @@ namespace GhostKeyBoard.Record
             this.mouseEvents.Unsubscribe();
         }
 
-        public void StartPlay()
+        public void StartPlay(List<HookBase> makro)
         {
+            this.HookList = new List<HookBase>(makro);
             this.TimerService.OnTimerTickEvent += OnTimerTickCheckExecuteAvialable;
             this.TimerService.Start();
         }
@@ -84,8 +87,16 @@ namespace GhostKeyBoard.Record
                                 return;
                             }
 
-                            this.ExecuteHook(this.HookList[i]);
-                            this.HookList.Remove(this.HookList[i]);
+                            try
+                            {
+                                this.ExecuteHook(this.HookList[i]);
+                                this.HookList.Remove(this.HookList[i]);
+                            }
+                            catch(Exception ex)
+                            {
+                                //[TS] OutofBounds possible here if makro too fast !
+                                break;
+                            }
                         }
                     }
                     else

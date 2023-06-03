@@ -37,16 +37,34 @@ namespace GhostKeyBoard.mvvm.ViewModel
             get => GetProperty<List<RecordModel>>(nameof(ItemsSource));
         }
 
+        public RecordModel SelectedRecord
+        {
+            set => SetProperty(nameof(SelectedRecord), value);
+            get => GetProperty<RecordModel>(nameof(SelectedRecord));
+        }
 
-        public ICommand OpenSaveFolder => new RelayCommand(param =>
+        public ICommand StartPlayCommand => new RelayCommand(param =>
         {
             try
             {
-                throw new NotImplementedException();
+                HookService.Instance.StartPlay(SelectedRecord.ListOfActions);
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"{nameof(HomeViewModel)},{nameof(OpenSaveFolder)},\nEX :[{ex}]");
+                Debug.WriteLine($"{nameof(RecordViewModel)},{nameof(StartPlayCommand)},\nEX :[{ex}]");
+            }
+        });
+
+
+        public ICommand StopPlayCommand => new RelayCommand(param =>
+        {
+            try
+            {
+                HookService.Instance.StopPlay();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"{nameof(RecordViewModel)},{nameof(StopPlayCommand)},\nEX :[{ex}]");
             }
         });
     }
