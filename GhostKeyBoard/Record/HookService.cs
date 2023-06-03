@@ -6,6 +6,7 @@ using GhostKeyBoard.SaveData;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -96,6 +97,7 @@ namespace GhostKeyBoard.Record
 
                             try
                             {
+                                Thread.Sleep(100);//some commands cant be executed cause its to fast
                                 this.ExecuteHook(this.HookList[i]);
                                 this.HookList.Remove(this.HookList[i]);
                             }
