@@ -1,9 +1,8 @@
-﻿using GhostKeyBoard.mvvm.Commands;
+﻿using GhostKeyBoard.Helper;
+using GhostKeyBoard.HookModel;
 using GhostKeyBoard.Record;
-using System;
+using GhostKeyBoard.SaveData;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows.Input;
 
 namespace GhostKeyBoard.mvvm.ViewModel
 {
@@ -16,14 +15,14 @@ namespace GhostKeyBoard.mvvm.ViewModel
 
             foreach (var item in HookService.Instance.SavedMakroList)
             {
-                RecordModel model = new RecordModel();
-                model.Time = item.Key[item.Key.Count - 1].Time;
-                model.Name = item.Value;
-                model.ListOfActions = item.Key;
-
-               this.ItemsSource.Add(model);
+                this.ItemsSource.Add(ModelConverter.CreateRecordModel(item));
             }
+
+            if (this.ItemsSource.Count == 0)
+                MakroFileService.Load();
         }
+
+
 
         public string HomeText
         {
@@ -37,17 +36,10 @@ namespace GhostKeyBoard.mvvm.ViewModel
             get => GetProperty<List<RecordModel>>(nameof(ItemsSource));
         }
 
-
-        public ICommand OpenSaveFolder => new RelayCommand(param =>
+        public RecordModel SelectedRecord
         {
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"{nameof(HomeViewModel)},{nameof(OpenSaveFolder)},\nEX :[{ex}]");
-            }
-        });
+            set => SetProperty(nameof(SelectedRecord), value);
+            get => GetProperty<RecordModel>(nameof(SelectedRecord));
+        }
     }
 }

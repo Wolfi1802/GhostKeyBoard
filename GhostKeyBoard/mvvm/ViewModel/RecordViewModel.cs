@@ -74,34 +74,6 @@ namespace GhostKeyBoard.mvvm.ViewModel
             }
         });
 
-
-        public ICommand StartPlayCommand => new RelayCommand(param =>
-        {
-            try
-            {
-                TimerService.Instance.Stop();
-                HookService.Instance.StartPlay();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"{nameof(RecordViewModel)},{nameof(StartPlayCommand)},\nEX :[{ex}]");
-            }
-        });
-
-
-        public ICommand StopPlayCommand => new RelayCommand(param =>
-        {
-            try
-            {
-                TimerService.Instance.Stop();
-                HookService.Instance.StopPlay();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"{nameof(RecordViewModel)},{nameof(StopPlayCommand)},\nEX :[{ex}]");
-            }
-        });
-
         public ICommand SaveRecordCommand => new RelayCommand(param =>
         {
             try

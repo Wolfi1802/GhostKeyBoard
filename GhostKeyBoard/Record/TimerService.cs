@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Timers;
 
 namespace GhostKeyBoard.Record
 {
     public class TimerService
     {
-        private const int TIMER_INTERVALL = 40;
+        private const int TIMER_INTERVALL = 100;
         private static TimerService _instance;
 
         public static TimerService Instance
@@ -22,21 +23,12 @@ namespace GhostKeyBoard.Record
         public EventHandler<TimeSpan?> OnTimerTickEvent;
 
         private Timer Timer { get; set; } = new Timer() { };
+        private DateTime? startTime;
 
         public TimerService()
         {
             this.Timer.Elapsed += OnTimerElapsed;
             this.Timer.Interval = TIMER_INTERVALL;
-        }
-
-        private DateTime? startTime;
-        private void OnTimerElapsed(object? sender, ElapsedEventArgs e)
-        {
-            if (sender is Timer timer)
-            {
-                var temp = (e.SignalTime - startTime).Value;
-                this.OnTimerTickEvent?.Invoke(sender, temp);
-            }
         }
 
         public void Start()
@@ -54,6 +46,18 @@ namespace GhostKeyBoard.Record
         public TimeSpan GetTime()
         {
             return (DateTime.Now - startTime).Value;
+        }
+
+        private void OnTimerElapsed(object? sender, ElapsedEventArgs e)
+        {
+            if (sender is Timer timer)
+            {
+                var temp = (e.SignalTime - startTime).Value;
+                Debug.WriteLine($"timespan vor event:{temp}");
+
+                if (HookService.Instance.IsPlay)
+                    HookService.Instance.HandleMakroLineup(temp);
+            }
         }
     }
 }
