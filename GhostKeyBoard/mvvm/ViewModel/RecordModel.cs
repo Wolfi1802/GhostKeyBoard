@@ -14,11 +14,17 @@ namespace GhostKeyBoard.mvvm.ViewModel
         public string Name { set; get; }
         public TimeSpan Time { set; get; }
 
+        public bool IsRepeat { set; get; }
+
+        private int repeatCount;
+        public int RepeatCount { set { this.repeatCount = value; } get { return this.repeatCount; } }
+
         public ICommand StartPlayCommand => new RelayCommand(param =>
         {
             try
             {
-                HookService.Instance.StartPlay(this.ListOfActions);
+                HookService.Instance.StartPlay(this);
+                this.repeatCount--;
             }
             catch (Exception ex)
             {
