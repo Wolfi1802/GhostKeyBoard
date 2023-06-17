@@ -1,6 +1,7 @@
 ﻿using GhostKeyBoard.DLLEvents;
 using GhostKeyBoard.Enum;
 using GhostKeyBoard.HookModel;
+using GhostKeyBoard.mvvm.ViewModel;
 using GhostKeyBoard.SaveData;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,7 @@ namespace GhostKeyBoard.Record
         private TimerService TimerService { get { return TimerService.Instance; } }
         private List<HookBase> HookList = new List<HookBase>();
         private object hookObject = new object();
+        private RecordModel model;
 
         private HookService()
         {
@@ -65,15 +67,21 @@ namespace GhostKeyBoard.Record
             this.mouseEvents.Unsubscribe();
         }
 
-        public void StartPlay(List<HookBase> makro)
+        public void StartPlay(RecordModel model)
         {
-            this.HookList = new List<HookBase>(makro);
-            this.IsPlay = true;
-            this.TimerService.Start();
+            this.model = model;
+
+            if (model != null)
+            {
+                this.HookList = new List<HookBase>(model.ListOfActions);
+                this.IsPlay = true;
+                this.TimerService.Start();
+            }
         }
 
         public void StopPlay()
         {
+            this.model = null;
             this.IsPlay = false;
             this.TimerService.Stop();
         }
@@ -91,8 +99,18 @@ namespace GhostKeyBoard.Record
                 {
                     if (HookList.Count == 0)
                     {
-                        this.StopPlay();
-                        return;
+                        if (this.model != null && this.model.IsRepeat && this.model.RepeatCount > 0)
+                        {
+                            var tempModel = this.model;
+                            this.StopPlay();
+                            tempModel.RepeatCount--;
+                            this.StartPlay(tempModel);
+                        }
+                        else
+                        {
+                            this.StopPlay();
+                            return;
+                        }
                     }
                     else if (System.TimeSpan.Compare(time, this.HookList[0].Time) == 1)
                     {
