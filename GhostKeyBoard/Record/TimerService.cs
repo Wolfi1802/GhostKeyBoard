@@ -54,6 +54,8 @@ namespace GhostKeyBoard.Record
             {
                 var temp = (e.SignalTime - startTime).Value;
 
+                this.OnTimerTickEvent?.Invoke(timer, temp);
+
                 if (HookService.Instance.IsPlay)
                     HookService.Instance.HandleMakroLineup(temp);
             }
