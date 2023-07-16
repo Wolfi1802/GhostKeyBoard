@@ -53,7 +53,6 @@ namespace GhostKeyBoard.Record
             if (sender is Timer timer)
             {
                 var temp = (e.SignalTime - startTime).Value;
-                Debug.WriteLine($"timespan vor event:{temp}");
 
                 if (HookService.Instance.IsPlay)
                     HookService.Instance.HandleMakroLineup(temp);
