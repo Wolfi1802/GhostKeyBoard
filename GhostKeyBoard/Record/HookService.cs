@@ -114,7 +114,6 @@ namespace GhostKeyBoard.Record
                     }
                     else if (System.TimeSpan.Compare(time, this.HookList[0].Time) == 1)
                     {
-                        Debug.WriteLine($"Realtime: {time} | makro time:{this.HookList[0].Time}");
                         this.ExecuteHook(this.HookList[0]);
                         this.HookList.Remove(this.HookList[0]);
                     }
