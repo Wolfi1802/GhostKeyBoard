@@ -58,7 +58,7 @@
                     <GridViewColumn x:Name="Start" Header="Start">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="P" Margin="5" MinWidth="15" Command="{Binding StartPlayCommand}"/>
+                                <Button Content="Play" Margin="5" MinWidth="15" Command="{Binding StartPlayCommand}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -66,7 +66,7 @@
                     <GridViewColumn x:Name="Stop" Header="Stop">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="S" Margin="5" MinWidth="15" Command="{Binding StopPlayCommand}"/>
+                                <Button Content="Stop" Margin="5" MinWidth="15" Command="{Binding StopPlayCommand}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -76,6 +76,15 @@
                             <DataTemplate>
                                 <DockPanel>
                                     <CheckBox VerticalAlignment="Center" Margin="5" MinWidth="15" IsChecked="{Binding IsRepeat}"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn x:Name="RepeatCount" Header="Repeat Count">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <DockPanel>
                                     <TextBox VerticalAlignment="Center" Text="{Binding RepeatCount}" MinWidth="30"/>
                                 </DockPanel>
                             </DataTemplate>
