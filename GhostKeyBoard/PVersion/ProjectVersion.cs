@@ -7,7 +7,7 @@ namespace GhostKeyBoard.PVersion
         private readonly Version _version;
         public ProjectVersion()
         {
-            _version = new Version(1, 2, 2, 1);
+            _version = new Version(2, 0, 0, 0);
         }
 
         public string GetVersion()
