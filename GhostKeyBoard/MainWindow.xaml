@@ -6,20 +6,28 @@
         xmlns:local="clr-namespace:GhostKeyBoard.mvvm.ViewModel"
         xmlns:view="clr-namespace:GhostKeyBoard.Pages"
         mc:Ignorable="d"
-        Title="{Binding VersionTitle}" Height="450" Width="800">
+        Title="{Binding VersionTitle}" Height="450" Width="900">
     <Window.Resources>
-        <DataTemplate DataType="{x:Type local:HomeViewModel}">
-            <view:HomePage />
-        </DataTemplate>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/GlobalStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
 
-        <DataTemplate DataType="{x:Type local:RecordViewModel}">
-            <view:RecordPage />
-        </DataTemplate>
+            <DataTemplate DataType="{x:Type local:HomeViewModel}">
+                <view:HomePage />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type local:RecordViewModel}">
+                <view:RecordPage />
+            </DataTemplate>
+        </ResourceDictionary>
+
 
     </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -28,18 +36,24 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Content="{Binding GlobalUserMessage}" Background="LightBlue" Foreground="Red"/>
+        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource LabelStyle}" Content="{Binding GlobalUserMessage}" Foreground="Red"/>
 
-        <DockPanel  Grid.Row="1" Grid.Column="0">
-            <Border BorderBrush="Transparent" BorderThickness="1">
-                <Expander ExpandDirection="Left" IsExpanded="true">
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-                    <StackPanel Background="LightBlue">
-                        <Button Content="Home" Command="{Binding ShowHomeCommand}" Margin="5"/>
-                        <Button Content="Record" Command="{Binding ShowRecordCommand}" Margin="5"/>
-                    </StackPanel>
-                </Expander>
-            </Border>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource ButtonStyle}" IsEnabled="{Binding HomeButtonIsEnabled}" Content="Home" Command="{Binding ShowHomeCommand}" Margin="5"/>
+            <Button Grid.Row="0" Grid.Column="1"  Style="{StaticResource ButtonStyle}" IsEnabled="{Binding RecordButtonIsEnabled}" Content="Record" Command="{Binding ShowRecordCommand}" Margin="5"/>
+
+        </Grid>
+
+        <DockPanel Grid.Row="2" Grid.Column="0">
 
             <Frame Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden"/>
         </DockPanel>

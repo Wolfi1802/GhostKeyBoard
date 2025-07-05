@@ -10,6 +10,10 @@
     <Page.Resources>
         <ResourceDictionary>
             <local:RecordViewModel x:Key="ViewModel"/>
+            <ResourceDictionary.MergedDictionaries>
+                
+                <ResourceDictionary Source="/Styles/GlobalStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
 
@@ -23,7 +27,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -31,15 +36,14 @@
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-
-        <Label Grid.Row="0" Grid.Column="0" Content="Record Time"/>
-        <Label Grid.Row="0" Grid.Column="2"  Content="{Binding RecordTime ,FallbackValue=00:00:00}" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="5"/>
-
-        <Button Grid.Row="1" Grid.Column="0" IsEnabled="{Binding StartIsEnabled}" Command="{Binding StartRecordCommand}" Content="Start Record" BorderBrush="Black" BorderThickness="1" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="150" Margin="5"/>
-        <Button Grid.Row="2" Grid.Column="0" IsEnabled="{Binding StopIsEnabled}" Command="{Binding StopRecordCommand}" Content="Stop Record" BorderBrush="Black" BorderThickness="1" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="150"  Margin="5"/>
-        <Label Grid.Row="3" Grid.Column="0"  IsEnabled="{Binding SaveIsEnabled}" Content="Name of Record" HorizontalAlignment="Center"/>
-        <TextBox Grid.Row="3" Grid.Column="2" IsEnabled="{Binding SaveIsEnabled}" Background="Transparent" BorderBrush="Black" BorderThickness="1" Text="{Binding RecordName,FallbackValue='Place your Name of Record'}" ToolTip="Name your Makro"/>
-        <Button Grid.Row="4" Grid.Column="0" IsEnabled="{Binding SaveIsEnabled}" Command="{Binding SaveRecordCommand}" Content="Save Record" BorderBrush="Black" BorderThickness="1" VerticalAlignment="Center" HorizontalAlignment="center" Height="50" Width="150" Margin="5"/>
+        
+        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource LabelStyle}" Content="Record Time"/>
+        <Label Grid.Row="0" Grid.Column="2" Style="{StaticResource LabelStyle}" Content="{Binding RecordTime ,FallbackValue=00:00:00}"/>
+        <Button Grid.Row="1" Grid.Column="0" Style="{StaticResource ButtonStyle}" IsEnabled="{Binding StartIsEnabled}" Command="{Binding StartRecordCommand}" Content="Start Record"/>
+        <Button Grid.Row="2" Grid.Column="0" Style="{StaticResource ButtonStyle}" IsEnabled="{Binding StopIsEnabled}" Command="{Binding StopRecordCommand}" Content="Stop Record"/>
+        <Label Grid.Row="3" Grid.Column="0"  Style="{StaticResource LabelStyle}" IsEnabled="{Binding SaveIsEnabled}" Content="Name of Record" HorizontalAlignment="Center"/>
+        <TextBox Grid.Row="3" Grid.Column="2" Style="{StaticResource TextBoxStyle}" IsEnabled="{Binding SaveIsEnabled}" Background="Transparent" BorderBrush="Black" BorderThickness="1" Text="{Binding RecordName,FallbackValue='Place your Name of Record'}" ToolTip="Name your Makro"/>
+        <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource ButtonStyle}" IsEnabled="{Binding SaveIsEnabled}" Command="{Binding SaveRecordCommand}" Content="Save Record"/>
 
     </Grid>
 </Page>

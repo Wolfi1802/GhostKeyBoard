@@ -11,6 +11,10 @@
     <Page.Resources>
         <ResourceDictionary>
             <local:HomeViewModel x:Key="ViewModel"/>
+            
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/GlobalStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
 
@@ -30,62 +34,88 @@
         <ListView ItemsSource="{Binding ItemsSource}" SelectedItem="{Binding SelectedRecord}" SelectionMode="Single">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn x:Name="Name" Header="Name">
+                    <GridViewColumn x:Name="Name">
+                        <GridViewColumn.Header>
+                            
+                            <Label Style="{StaticResource LabelStyle}" Content="Name"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Label Margin="5" Height="25" Content="{Binding Name}"/>
+                                <Label Style="{StaticResource LabelStyle}" Content="{Binding Name}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn x:Name="Aktions" Header="Aktions">
+                    <GridViewColumn x:Name="Actions">
+                        <GridViewColumn.Header>
+                            <Label Style="{StaticResource LabelStyle}" Content="Actions"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Label Margin="5" Height="25" Content="{Binding ListOfActions.Count}"/>
+                                <Label Style="{StaticResource LabelStyle}" Content="{Binding ListOfActions.Count}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
 
-                    <GridViewColumn x:Name="Time" Header="Time">
+                    <GridViewColumn x:Name="Time">
+                        <GridViewColumn.Header>
+                            <Label Style="{StaticResource LabelStyle}" Content="Time"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Label Margin="5" Height="25" Content="{Binding Time}"/>
+                                <Label Style="{StaticResource LabelStyle}" Content="{Binding Time}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn x:Name="Start" Header="Start">
+                    <GridViewColumn x:Name="Start">
+                        <GridViewColumn.Header>
+                            <Label Style="{StaticResource LabelStyle}" Content="Start"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Play" Margin="5" MinWidth="15" Command="{Binding StartPlayCommand}"/>
+                                <Button Style="{StaticResource ButtonStyle}" Content="Play" 
+                                        Command="{Binding StartPlayCommand}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn x:Name="Stop" Header="Stop">
+                    <GridViewColumn x:Name="Stop">
+                        <GridViewColumn.Header>
+                            <Label Style="{StaticResource LabelStyle}" Content="Stop"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Stop" Margin="5" MinWidth="15" Command="{Binding StopPlayCommand}"/>
+                                <Button Style="{StaticResource ButtonStyle}" Content="Stop" 
+                                        Command="{Binding StopPlayCommand}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn x:Name="Repeat" Header="Repeat">
+                    <GridViewColumn x:Name="Repeat">
+                        <GridViewColumn.Header>
+                            <Label Style="{StaticResource LabelStyle}" Content="Repeat"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <DockPanel>
-                                    <CheckBox VerticalAlignment="Center" Margin="5" MinWidth="15" IsChecked="{Binding IsRepeat}"/>
+                                    <CheckBox VerticalAlignment="Center" 
+                                              IsChecked="{Binding IsRepeat}"/>
                                 </DockPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn x:Name="RepeatCount" Header="Repeat Count">
+                    <GridViewColumn x:Name="RepeatCount">
+                        <GridViewColumn.Header>
+                            <Label Style="{StaticResource LabelStyle}" Content="Repeat Count"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <DockPanel>
-                                    <TextBox VerticalAlignment="Center" Text="{Binding RepeatCount}" MinWidth="30"/>
+                                    <TextBox Style="{StaticResource TextBoxStyle}" VerticalAlignment="Center" 
+                                             Text="{Binding RepeatCount}" MinWidth="30"/>
                                 </DockPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

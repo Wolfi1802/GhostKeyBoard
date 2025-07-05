@@ -69,6 +69,7 @@ namespace GhostKeyBoard.mvvm.ViewModel
                 HookService.Instance.StartRecord();
                 this.StartIsEnabled = false;
                 this.StopIsEnabled = true;
+                this.SaveIsEnabled = false;
             }
             catch (Exception ex)
             {
@@ -106,6 +107,7 @@ namespace GhostKeyBoard.mvvm.ViewModel
                     this.SaveIsEnabled = false;
                     this.RecordTime = default;
                     HookService.Instance.Save(this.RecordName);
+                    this.RecordName = default;
                 }
             }
             catch (Exception ex)
