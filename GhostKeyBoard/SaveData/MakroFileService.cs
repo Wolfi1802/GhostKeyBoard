@@ -1,6 +1,5 @@
 ﻿using GhostKeyBoard.Helper;
 using GhostKeyBoard.HookModel;
-using GhostKeyBoard.mvvm.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,12 +21,17 @@ namespace GhostKeyBoard.SaveData
 
         public static async Task<Dictionary<List<HookBase>, string>> Load()
         {
-            await using FileStream stream = File.OpenRead(Path);
-            List<SaveModel>? datas = await JsonSerializer.DeserializeAsync<List<SaveModel>>(stream);
+            if (File.Exists(Path))
+            {
+                await using FileStream stream = File.OpenRead(Path);
+                List<SaveModel>? datas = await JsonSerializer.DeserializeAsync<List<SaveModel>>(stream);
 
-            Dictionary<List<HookBase>, string> result = ModelConverter.Load(datas);
+                Dictionary<List<HookBase>, string> result = ModelConverter.Load(datas);
 
-            return result;
+                return result;
+            }
+
+            return default;
         }
 
     }

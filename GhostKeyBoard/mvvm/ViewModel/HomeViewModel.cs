@@ -12,13 +12,16 @@ namespace GhostKeyBoard.mvvm.ViewModel
     {
         public HomeViewModel()
         {
-            this.HomeText = "Welcome User";
+            this.HomeText = ProjectTexts.WELCOME;
             this.ItemsSource = new ObservableCollection<RecordModel>();
 
-            foreach (var item in HookService.Instance.SavedMakroList)
+            var savedMakros = HookService.Instance.SavedMakroList;
+
+            foreach (var item in savedMakros)
             {
                 this.ItemsSource.Add(ModelConverter.CreateRecordModel(item));
             }
+
         }
 
 
@@ -72,10 +75,10 @@ namespace GhostKeyBoard.mvvm.ViewModel
                 }
                 if (successfullRemoved)
                 {
-                    MainWindowViewModel.SendUserMessageEvent?.Invoke(null, $"{nameOfDeleted} wurde erfolgreich entfernt");
+                    MainWindowViewModel.SendUserMessageEvent?.Invoke(null, ProjectTexts.GetDeletetSuccessfull(nameOfDeleted));
                 }
                 else
-                    MainWindowViewModel.SendUserMessageEvent?.Invoke(null, $"Funktion außer Betrieb, bitte später erneut versuchen.");
+                    MainWindowViewModel.SendUserMessageEvent?.Invoke(null, ProjectTexts.FUNCTION_DONT_WORK);
             }
             catch (Exception ex)
             {

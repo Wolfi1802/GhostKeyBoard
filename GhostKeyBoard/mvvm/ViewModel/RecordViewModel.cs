@@ -11,7 +11,6 @@ namespace GhostKeyBoard.mvvm.ViewModel
     {
         public RecordViewModel()
         {
-            Debug.WriteLine("INIT TIMER");
             TimerService.Instance.OnTimerTickEvent += Event;
             this.StartIsEnabled = true;
             this.StopIsEnabled = false;
@@ -21,7 +20,6 @@ namespace GhostKeyBoard.mvvm.ViewModel
 
         ~RecordViewModel()
         {
-            Debug.WriteLine("DESPO TIMER");
             TimerService.Instance.OnTimerTickEvent -= Event;
         }
 
@@ -100,7 +98,7 @@ namespace GhostKeyBoard.mvvm.ViewModel
             {
                 if (string.IsNullOrWhiteSpace(this.RecordName))
                 {
-                    MainWindowViewModel.SendUserMessageEvent?.Invoke(null, $"Dein Makro Name ist leer. Er Muss Buchstaben, Zahlen oder Zeichen enthalten.");
+                    MainWindowViewModel.SendUserMessageEvent?.Invoke(null, ProjectTexts.EMPTY_MACRO);
                 }
                 else
                 {

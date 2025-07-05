@@ -189,9 +189,12 @@ namespace GhostKeyBoard.Record
 
         private async void Load()
         {
-            var laodedDatas = await MakroFileService.Load();
+            var loadedDatas = await MakroFileService.Load();
 
-            this.SavedMakroList = laodedDatas;
+            if (loadedDatas is null)
+                this.SavedMakroList = new Dictionary<List<HookBase>, string>();
+            else
+                this.SavedMakroList = loadedDatas;
         }
     }
 }
