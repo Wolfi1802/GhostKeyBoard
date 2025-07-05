@@ -1,7 +1,10 @@
 ﻿using GhostKeyBoard.Helper;
+using GhostKeyBoard.mvvm.Commands;
 using GhostKeyBoard.Record;
-using GhostKeyBoard.SaveData;
-using System.Collections.Generic;
+using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Windows.Input;
 
 namespace GhostKeyBoard.mvvm.ViewModel
 {
@@ -10,7 +13,7 @@ namespace GhostKeyBoard.mvvm.ViewModel
         public HomeViewModel()
         {
             this.HomeText = "Welcome User";
-            this.ItemsSource = new List<RecordModel>();
+            this.ItemsSource = new ObservableCollection<RecordModel>();
 
             foreach (var item in HookService.Instance.SavedMakroList)
             {
@@ -26,10 +29,10 @@ namespace GhostKeyBoard.mvvm.ViewModel
             get => GetProperty<string>(nameof(HomeText));
         }
 
-        public List<RecordModel> ItemsSource
+        public ObservableCollection<RecordModel> ItemsSource
         {
             set => SetProperty(nameof(ItemsSource), value);
-            get => GetProperty<List<RecordModel>>(nameof(ItemsSource));
+            get => GetProperty<ObservableCollection<RecordModel>>(nameof(ItemsSource));
         }
 
         public RecordModel SelectedRecord
@@ -37,5 +40,47 @@ namespace GhostKeyBoard.mvvm.ViewModel
             set => SetProperty(nameof(SelectedRecord), value);
             get => GetProperty<RecordModel>(nameof(SelectedRecord));
         }
+
+        private bool RemoveFromUi(RecordModel modelToRemove)
+        {
+            if (this.ItemsSource.Contains(modelToRemove))
+            {
+                this.ItemsSource.Remove(modelToRemove);
+
+                return true;
+            }
+            else
+                return false;
+        }
+
+
+        public ICommand DeleteCommand => new RelayCommand(param =>
+        {
+            try
+            {
+                bool successfullRemoved = false;
+                string nameOfDeleted = default;
+
+                if (this.SelectedRecord is not null)
+                {
+                    nameOfDeleted = this.SelectedRecord.Name;
+
+                    successfullRemoved = HookService.Instance.Delete(this.SelectedRecord);
+
+                    if (successfullRemoved)
+                        successfullRemoved = this.RemoveFromUi(this.SelectedRecord);
+                }
+                if (successfullRemoved)
+                {
+                    MainWindowViewModel.SendUserMessageEvent?.Invoke(null, $"{nameOfDeleted} wurde erfolgreich entfernt");
+                }
+                else
+                    MainWindowViewModel.SendUserMessageEvent?.Invoke(null, $"Funktion außer Betrieb, bitte später erneut versuchen.");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"{nameof(HomeViewModel)},{nameof(DeleteCommand)},\nEX :[{ex}]");
+            }
+        });
     }
 }

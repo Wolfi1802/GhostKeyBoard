@@ -5,7 +5,6 @@ using GhostKeyBoard.mvvm.ViewModel;
 using GhostKeyBoard.SaveData;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -86,6 +85,30 @@ namespace GhostKeyBoard.Record
             this.model = null;
             this.IsPlay = false;
             this.TimerService.Stop();
+        }
+
+        public bool Delete(RecordModel modelToDelete)
+        {
+            KeyValuePair<List<HookBase>, string> makroToDelete = default;
+
+            foreach (KeyValuePair<List<HookBase>, string> makro in this.SavedMakroList)
+            {
+                if (makro.Value.Equals(modelToDelete.Name))
+                {
+                    makroToDelete = makro;
+                }
+            }
+
+            if (makroToDelete.Key.Count > 0 && !string.IsNullOrEmpty(makroToDelete.Value))
+            {
+                this.SavedMakroList.Remove(makroToDelete.Key);
+                MakroFileService.Save(this.SavedMakroList);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
 

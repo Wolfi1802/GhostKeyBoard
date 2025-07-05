@@ -32,6 +32,15 @@
         </Grid.ColumnDefinitions>
 
         <ListView ItemsSource="{Binding ItemsSource}" SelectedItem="{Binding SelectedRecord}" SelectionMode="Single">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Command="{Binding DeleteCommand}">
+                        <MenuItem.Header>
+                            <Label Style="{StaticResource LabelStyle}" Content="Delete selected Item"/>
+                        </MenuItem.Header>
+                    </MenuItem>
+                </ContextMenu>
+            </ListView.ContextMenu>
             <ListView.View>
                 <GridView>
                     <GridViewColumn x:Name="Name">
@@ -120,6 +129,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+
                 </GridView>
             </ListView.View>
         </ListView>
