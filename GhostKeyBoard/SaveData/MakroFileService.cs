@@ -5,32 +5,29 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace GhostKeyBoard.SaveData
 {
     public static class MakroFileService
     {
         public static readonly string Path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\ghostMouse.json";
-        public static async void Save(List<RecordModel> makros)
-        {
-            //await using FileStream createStream = File.Create(Path);
-            //var datas = ModelConverter.Convert(makros);
-            //await JsonSerializer.SerializeAsync(createStream, datas);
-        }
 
         public static async void Save(Dictionary<List<HookBase>, string> makros)
         {
-            //await using FileStream createStream = File.Create(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\ghostMouse.json");
-            //var datas = ModelConverter.Convert(ModelConverter.CreateRecordModel(makros));
-            //await JsonSerializer.SerializeAsync(createStream, datas);
+            await using FileStream createStream = File.Create(Path);
+            List<SaveModel> datas = ModelConverter.Convert(ModelConverter.CreateRecordModel(makros));
+            await JsonSerializer.SerializeAsync(createStream, datas);
         }
 
-        //TODO[TS] XML ...json cant load actions
-
-        public static async void Load()
+        public static async Task<Dictionary<List<HookBase>, string>> Load()
         {
-            //using FileStream stream = File.OpenRead(Path);
-            //var datas =  await JsonSerializer.DeserializeAsync<List<RecordModel>>(stream);
+            await using FileStream stream = File.OpenRead(Path);
+            List<SaveModel>? datas = await JsonSerializer.DeserializeAsync<List<SaveModel>>(stream);
+
+            Dictionary<List<HookBase>, string> result = ModelConverter.Load(datas);
+
+            return result;
         }
 
     }

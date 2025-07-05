@@ -1,4 +1,5 @@
-﻿using GhostKeyBoard.HookModel;
+﻿using GhostKeyBoard.Enum;
+using GhostKeyBoard.HookModel;
 using GhostKeyBoard.mvvm.ViewModel;
 using GhostKeyBoard.SaveData;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ namespace GhostKeyBoard.Helper
 {
     public static class ModelConverter
     {
+        #region Speichern
 
         public static List<RecordModel> CreateRecordModel(Dictionary<List<HookBase>, string> dictionary)
         {
@@ -71,5 +73,53 @@ namespace GhostKeyBoard.Helper
 
             return temp;
         }
+
+        #endregion
+
+        #region Laden
+
+        public static Dictionary<List<HookBase>, string> Load(List<SaveModel> savedModels)
+        {
+            var result = new Dictionary<List<HookBase>, string>();
+
+            foreach (var saveModel in savedModels)
+            {
+                List<HookBase> actions = new List<HookBase>();
+
+                foreach (var action in saveModel.listOfActions)
+                {
+                    HookBase hook = null;
+
+                    if ((action.KindOfHook & Hook.KeyBoard) != 0)
+                    {
+                        hook = new KeyBoardHook
+                        {
+                            KindOfHook = action.KindOfHook,
+                            KeyChar = action.KeyChar,
+                            Time = action.Time
+                        };
+                    }
+                    else if ((action.KindOfHook & Hook.Mouse) != 0)
+                    {
+                        hook = new MouseHook
+                        {
+                            KindOfHook = action.KindOfHook,
+                            Point = action.Point,
+                            MouseButtons = action.MouseButtons,
+                            Time = action.Time
+                        };
+                    }
+
+                    if (hook != null)
+                        actions.Add(hook);
+                }
+
+                result.Add(actions, saveModel.Name);
+            }
+
+            return result;
+        }
+
+        #endregion
     }
 }

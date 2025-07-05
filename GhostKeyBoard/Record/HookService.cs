@@ -41,7 +41,9 @@ namespace GhostKeyBoard.Record
 
         private HookService()
         {
+            Load();
         }
+
 
         public void Save(string name)
         {
@@ -160,6 +162,13 @@ namespace GhostKeyBoard.Record
             hook.Time = TimerService.GetTime();
 
             this.HookList.Add(hook);
+        }
+
+        private async void Load()
+        {
+            var laodedDatas = await MakroFileService.Load();
+
+            this.SavedMakroList = laodedDatas;
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using GhostKeyBoard.Helper;
-using GhostKeyBoard.HookModel;
 using GhostKeyBoard.Record;
 using GhostKeyBoard.SaveData;
 using System.Collections.Generic;
@@ -17,9 +16,6 @@ namespace GhostKeyBoard.mvvm.ViewModel
             {
                 this.ItemsSource.Add(ModelConverter.CreateRecordModel(item));
             }
-
-            if (this.ItemsSource.Count == 0)
-                MakroFileService.Load();
         }
 
 
